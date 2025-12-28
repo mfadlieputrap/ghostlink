@@ -12,7 +12,7 @@ export default function Home() {
     setLoading(true);
 
     try {
-      // Tembak ke Backend NestJS kamu
+      // Kirim ke backend
       const res = await fetch('http://localhost:3000/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

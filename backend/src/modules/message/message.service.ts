@@ -7,7 +7,6 @@ import { Repository } from 'typeorm';
 import { CipherService } from './cipher.service';
 import { V4 } from 'paseto';
 import { ConfigService } from '@nestjs/config';
-import { createPrivateKey, createPublicKey } from 'crypto';
 
 interface GhostTokenPayload {
   sub?: string;
@@ -62,7 +61,7 @@ export class MessageService {
     if (!publicKeyHex) {
       throw new Error('FATAL: PASSPHRASE_PUBLIC_KEY belum diset di .env!');
     }
-    const publicKeyObject = Buffer.from(publicKeyHex, 'hex');
+
     try {
       payload = await V4.verify(token, publicKeyHex);
     } catch (e) {

@@ -3,7 +3,6 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useState, useEffect, Suspense } from 'react';
 
-// Kita butuh wrapper biar gak error di Next.js saat build
 function ReadMessageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -14,7 +13,6 @@ function ReadMessageContent() {
   const [loading, setLoading] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
 
-  // Kalau gak ada token, tendang balik ke home
   useEffect(() => {
     if (!token) {
       router.push('/');
@@ -27,7 +25,7 @@ function ReadMessageContent() {
 
     try {
       const res = await fetch(`http://localhost:3000/messages/read?token=${token}`, {
-        method: 'GET', // Ingat, backend kita pakai method GET
+        method: 'GET',
       });
 
       const data = await res.json();
@@ -79,7 +77,7 @@ function ReadMessageContent() {
       ) : (
         // --- TAMPILAN SETELAH DIBUKA ---
         <div className="bg-gray-900 border-2 border-green-500 p-6 rounded-xl relative overflow-hidden">
-          {/* Efek scanline ala hacker */}
+
           <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%]"></div>
 
           <div className="relative z-20">
