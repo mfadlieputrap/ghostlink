@@ -3,22 +3,20 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MessageModule } from './modules/message/message.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import dotenv from 'dotenv';
-import { ConfigModule } from '@nestjs/config';
-dotenv.config();
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.PG_HOST,
-      port: Number(process.env.PG_PORT),
-      username: process.env.PG_USER,
-      password: process.env.PG_PASS,
-      database: process.env.PG_DB,
-      autoLoadEntities: true,
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        type: 'postgres',
+        url: config.get<string>('DATABASE_URL'),
+        autoLoadEntities: true,
+        synchronize: true,
+      }),
     }),
     MessageModule,
   ],
