@@ -24,7 +24,7 @@ function ReadMessageContent() {
     setError('');
 
     try {
-      const res = await fetch(`http://localhost:3000/messages/read?token=${token}`, {
+      const res = await fetch(`${process.env.NET_PUBLIC_API_URL}/messages/read?token=${token}`, {
         method: 'GET',
       });
 
